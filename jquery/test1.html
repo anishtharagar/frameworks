@@ -1,0 +1,63 @@
+<script>
+        function processCSV(file,parentNode){
+                var frag = document.createDocumentFragment()
+                , lines = file.split('\n')
+                , option
+                ;
+              for (var i = 0, len = lines.length; i < len; i++){
+              option = document.createElement("option");
+              option.setAttribute("value", "Choice");
+             frag.appendChild(option);
+        }
+        parentNode.appendChild(frag);
+     }
+             var plant_select = document.createElement("select");
+             var intial_option = document.createElement("option");
+             var datafile = '';
+             var xmlhttp = new XMLHttpRequest();
+
+             plant_select.setAttribute("class", "selectbox");
+             plant_select.setAttribute("id", "plant_select");
+             intial_option.setAttribute("value","")
+             intial_option.setAttribute("disabled","disabled")
+             intial_option.setAttribute("selected","selected")
+             intial_option.innerHTML = "Please select a Plant";
+             plant_select.appendChild(intial_option)
+
+             xmlhttp.open("GET","file:///csv/test.csv",false);
+             xmlhttp.send(null);
+
+
+             xmlhttp.onreadystatechange = function()
+             {
+                if(xmlhttp.status==0)
+                {
+                    processCSV(xmlhttp.responseText, plant_select);
+                }
+             }
+</script>
+
+$.get(csv_path, function(data) {
+    var csv_string = data;
+        //Do stuff with the CSV data ...
+});
+(function() {
+
+    var csv_path = "csv/test.csv",
+
+    var renderCSVDropdown = function(csv) {
+        var dropdown = $('select#my-dropdown');
+        for(var i = 0; i < csv.length; i++) {
+            var record = csv[i];
+            var entry = $('<option>').attr('value', record.someProperty);
+            dropdown.append(entry);
+        }
+    };
+
+    $.get(csv_path, function(data) {
+        var csv = CSVToArray(data);
+        renderCSVDropdown(csv);
+    });
+
+}());
+

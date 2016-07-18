@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Selectmenu - Default functionality</title>
+  <style>
+    fieldset {
+      border: 0;
+    }
+    label {
+      display: block;
+      margin: 30px 0 0 0;
+    }
+    .overflow {
+      height: 200px;
+    }
+  </style>
+
+<script>
+	function processCSV(file,parentNode){
+      		var frag = document.createDocumentFragment()
+        	, lines = file.split('\n')
+        	, option
+        	;
+      	      for (var i = 0, len = lines.length; i < len; i++){
+              option = document.createElement("option");
+              option.setAttribute("value", "Choice"); 
+             frag.appendChild(option);
+      	}
+      	parentNode.appendChild(frag);
+     }
+             var plant_select = document.createElement("select");  
+             var intial_option = document.createElement("option");
+             var datafile = '';
+             var xmlhttp = new XMLHttpRequest();
+
+             plant_select.setAttribute("class", "selectbox");   
+             plant_select.setAttribute("id", "plant_select");
+             intial_option.setAttribute("value","")
+             intial_option.setAttribute("disabled","disabled")
+             intial_option.setAttribute("selected","selected")
+             intial_option.innerHTML = "Please select a Plant";
+             plant_select.appendChild(intial_option)
+
+             xmlhttp.open("GET","file:///csv/test.csv",false);
+             xmlhttp.send(null);
+		
+
+             xmlhttp.onreadystatechange = function()
+             {
+                if(xmlhttp.status==0)
+                {
+                    processCSV(xmlhttp.responseText, plant_select);
+                }
+             }
+</script>
+</head>
+<body>
+ 
+</body>
+</head>
+
